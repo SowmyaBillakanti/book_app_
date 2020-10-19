@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel= "stylesheet" href = "styles/base.css" >
+        <title> Hello World </title>
+    </head>
+    <body>
+        <h1>
+            Search for Books
+        </h1>
+        <form action="/searches" method="post">
+
+            <fieldset>
+                <input type="text" name="search" placeholder="search..." required>
+            </fieldset>
+            <fieldset>
+                <input type="radio" name="search" value="title" required>
+            </fieldset>
+            <fieldset>
+                <input type="radio" name="search" value="author" required>
+            </fieldset>
+            <button type="submit">Search Books</button>
+
+
+        </form>
+    </body>
+</html>
