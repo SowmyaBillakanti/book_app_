@@ -8,6 +8,19 @@
         <h1>
             Search for Books
         </h1>
+
+        <ul>
+            <% books.forEach(books => { %>
+                <li id="row">
+                    <img height="270px" width="200px" src="<%=books.image_url %>" alt="">
+                    <h3> <%= books.title %> </h3>
+                    <p> <%= books.author %> </p>
+                    <p id="desc"> <%= books.description %> </p>
+                    <p> <%= books.amount %> </p>
+                </li>
+
+            })
+        </ul>
         <form action="/searches" method="post">
 
             <fieldset>
