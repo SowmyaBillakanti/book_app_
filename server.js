@@ -15,9 +15,6 @@ app.get('/', (req , res) => {
 });
 
 app.post('/searches', createSearch);
-// app.get('/badthing', (request,response) => {
-//     throw new Error('WTF???');
-//   });
 
 function createSearch(req, res) {
     let url = 'https://www.googleapis.com/books/v1/volumes?';
