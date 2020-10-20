@@ -5,14 +5,29 @@ const express = require('express');
 const superagent = require('superagent');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const pg = require('pg');
+
+const client = new pg.Client(process.env.DATABASE_URL);
 
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req , res) => {
-    res.render('pages/index');
-});
+// app.get('/', (req , res) => {
+//     res.render('pages/index');
+// });
+
+app.get('/', getBooks);
+
+function getBooks(req, res) {
+    let SQL = 'SELECT * FROM books;';
+
+    return client.query(SQL)
+    .then(results => {
+        res.render('pages/index', {results: results.rows})
+    })
+    .catch(err => console.error(err));
+}
 
 app.post('/searches', createSearch);
 
@@ -53,6 +68,8 @@ function Book(data){
     }
     this.image = tempLink;
   }
+
+  
  
    // Error Handler
    app.use( (err,request,response,next) => {
