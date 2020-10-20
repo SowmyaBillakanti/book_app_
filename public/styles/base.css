@@ -1,6 +1,5 @@
-@import url('styles/reset.css')
-
-body {
-    background-color: aqua;
+@import url('reset.css');
+img {
+    height:100px;
+    width: 100px;
 }
-
