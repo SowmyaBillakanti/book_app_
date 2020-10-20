@@ -1,5 +1,37 @@
 @import url('reset.css');
-img {
-    height:100px;
-    width: 100px;
+@import url('layout.css');
+@import url(modules.css);
+
+body {
+    background-color: antiquewhite;
 }
+
+h1 {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 4em;
+    color: teal;
+    border: rgb(6, 66, 66) thick solid;
+    background-color: rgb(237, 243, 243);
+}
+
+
+@media(min-width: 200px) and (max-width: 600px) {
+
+h1 {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 3em;
+    color: darkblue;
+}
+
+
+@media(min-width:601px){
+    
+h1 {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 4em;
+    color: darkblue;
+}
+

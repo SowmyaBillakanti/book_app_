@@ -23,9 +23,6 @@ function createSearch(req, res) {
     let url = 'https://www.googleapis.com/books/v1/volumes?';
     console.log('body:', req.body);
     console.log('data:', req.body.search);
-    let queryObject = {
-        q: `${req.body.searchby}: ${req.body.search}`,
-    };
 
     if(req.body.search[1] === 'title'){ url += `intitle:${req.body.search[0]}`;}
     if(req.body.search[1] === 'author'){ url += `inauthor:${req.body.search[0]}`;}
