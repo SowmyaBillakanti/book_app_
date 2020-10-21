@@ -9,7 +9,8 @@
     <header>
         <%- include('../layout/header') %>
     </header>
-    <p> Number of Books in database: <%= books.length %></p>
+
+    <p id="paragraph"> Number of Books in database: <%= books.length %></p>
 
     <ul>
         <% books.forEach(book => { %>
