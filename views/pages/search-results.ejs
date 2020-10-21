@@ -10,12 +10,13 @@
     <header>
         <h1> Books from Google </h1>
     </header>
+    <p>  Number of Books in database: <%= books.length %></p>
     
     <main>
         <div>
             <% books.forEach (book => { %>
         </div>
-
+        <form method="post" action="/add/<%= book.id%>">
         <section>
             <img src='<%= book.image %>'>
             <div id='title'>
@@ -27,6 +28,15 @@
             <div>
                 <%= book.description %>
             </div>
+            <input type="hidden" name="title" value="<%= book.title %>" />
+    <input type="hidden" name="authors" value="<%= book.authors %>" />
+    <input type="hidden" name="isbn" value="<%= book.isbn %>" />
+    <input type="hidden" name="image_url" value="<%= book.image %>" />
+    <input type="hidden" name="description" value="<%= book.description %>" />
+    <input type="hidden" name="bookshelf" value="<%= book.bookshelf %>" />
+    <input type="hidden" name="amount" value="<%= book.amount %>" />
+                <button type="submit">Add Book</button>
+            </form>
             <% }) %>
         </section>
     </main>

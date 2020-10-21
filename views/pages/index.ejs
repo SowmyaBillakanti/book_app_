@@ -8,19 +8,6 @@
         <h1>
             Search for Books
         </h1>
-
-        <ul>
-            <% books.forEach(books => { %>
-                <li id="row">
-                    <img height="270px" width="200px" src="<%=books.image_url %>" alt="">
-                    <h3> <%= books.title %> </h3>
-                    <p> <%= books.author %> </p>
-                    <p id="desc"> <%= books.description %> </p>
-                    <p> <%= books.amount %> </p>
-                </li>
-
-            })
-        </ul>
         <form action="/searches" method="post">
 
             <fieldset>
@@ -36,5 +23,20 @@
 
 
         </form>
+        <p>  Number of Books in database: <%= books.length %></p>
+
+        <ul>
+            <% books.forEach(book => { %>
+                <li id="row">
+                    <img height="270px" width="200px" src="<%=book.image_url %>" alt="">
+                    <h3> <%= book.title %> </h3>
+                    <p> <%= book.author %> </p>
+                    <p id="desc"> <%= book.description %> </p>
+                    <p> <%= book.amount %> </p>
+                </li>
+
+            <% }); %>
+        </ul>
+        
     </body>
 </html>

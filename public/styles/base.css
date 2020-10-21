@@ -1,6 +1,6 @@
 @import url('reset.css');
 @import url('layout.css');
-@import url(modules.css);
+@import url('modules.css');
 
 body {
     background-color: antiquewhite;
@@ -34,4 +34,5 @@ h1 {
     font-size: 4em;
     color: darkblue;
 }
-
+}
+}

@@ -1,6 +1,5 @@
 'use strict'
-
-const { response } = require('express');
+require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
 const app = express();
@@ -12,25 +11,14 @@ const client = new pg.Client(process.env.DATABASE_URL);
 app.use(express.urlencoded({extended:true}));
 app.use(express.static('./public'));
 app.set('view engine', 'ejs');
+app.get('/', getBooks);
+app.get('/books/:id', getOneBook);
+app.post('/add', add);
+app.post('/searches', createSearch);
 
 // app.get('/', (req , res) => {
 //     res.render('pages/index');
 // });
-
-app.get('/', getBooks);
-
-function getBooks(req, res) {
-    let SQL = 'SELECT * FROM books;';
-
-    return client.query(SQL)
-    .then(results => {
-        res.render('pages/index', {results: results.rows})
-    })
-    .catch(err => console.error(err));
-}
-
-app.post('/searches', createSearch);
-
 function createSearch(req, res) {
     let url = 'https://www.googleapis.com/books/v1/volumes?';
     console.log('body:', req.body);
@@ -67,7 +55,62 @@ function Book(data){
          tempLink ='https'+tempLink.slice(4, tempLink.length) 
     }
     this.image = tempLink;
-  }
+  };
+
+
+
+function getBooks(req, res) {
+    let SQL = 'SELECT * FROM books;';
+    console.log("attempting to pull books");
+
+    client.query(SQL)
+    .then(result => {
+        console.log('got db info');
+        res.render('pages/index', { books: result.rows});
+    })
+    .catch(err => console.error(err));
+}
+function getOneBook(req, res){
+    let SQL = 'SELECT * FROM books WHERE id=$1';
+    let values = [req.params.book_id];
+  
+    return client.query(SQL, values)
+      .then(result => {
+        res.render('pages/show', { books: result.rows[0] })
+      })
+      .catch(err => console.error(err));
+  };
+  
+
+  function add(request, response)  {
+    console.log('You are here');
+    let SQL = `
+      INSERT INTO books (authors, title, isbn, image_url, description, bookshelf, amount)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+  
+    let VALUES = [
+      request.body.authors,
+      request.body.title,
+      request.body.isbn,
+      request.body.image_url,
+      request.body.description,
+      request.body.bookshelf,
+      request.body.amount
+    ];
+    client.query(SQL, VALUES)
+      .then(results => {
+        response.status(200).redirect('/');
+      })
+      .catch( error => {
+        console.error(error.message);
+      });
+  };
+  
+
+
+
+
+
 
   
  
@@ -81,7 +124,12 @@ function Book(data){
         console.log(request);
         response.status(404).send(`Can't Find ${request.pathname}`);
       });
-  
+
+client.connect()
+.then(()=> {
 app.listen(PORT, () => {
     console.log(`listening on port: ${PORT}`);
 });
+});
+  
+
