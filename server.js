@@ -21,20 +21,20 @@ app.post('/searches', createSearch);
 // });
 function createSearch(req, res) {
     let url = 'https://www.googleapis.com/books/v1/volumes?';
-    console.log('body:', req.body);
-    console.log('data:', req.body.search);
+    // console.log('body:', req.body);
+    // console.log('data:', req.body.search);
 
     if(req.body.search[1] === 'title'){ url += `intitle:${req.body.search[0]}`;}
     if(req.body.search[1] === 'author'){ url += `inauthor:${req.body.search[0]}`;}
     let queryObject = {
         q:`${req.body.searchby}: ${req.body.search}`,
     };
-    console.log(queryObject)
+    // console.log(queryObject)
     superagent.get(url)
     .query(queryObject)
     .then(data => {
         let books = data.body.items.map(book => new Book(book));
-        console.log(books);
+        // console.log(books);
         res.status(200).render('pages/search-results', {books: books});
         // console.log('google books data:', data);
         // res.json(data.text);
@@ -50,7 +50,7 @@ function Book(data){
     this.amount = data.saleInfo.listPrice ? data.saleInfo.listPrice.amount : ' Unknown.';
 
     if (tempLink.slice(5) === 'https') {
-        console.log(secure);
+        // console.log(secure);
     } else{
          tempLink ='https'+tempLink.slice(4, tempLink.length) 
     }
@@ -74,11 +74,11 @@ function getBooks(req, res) {
 function getOneBook(req, res){
     let SQL = 'SELECT * FROM books WHERE id=$1';
     let values = [req.params.id];
-    console.log(req.params.id);
+    // console.log(req.params.id);
   
     return client.query(SQL, values)
       .then(result => {
-          console.log(result.rows[0]);
+        //   console.log(result.rows[0]);
         res.render('pages/books/show', { book: result.rows[0] })
       })
       .catch(err => console.error(err));
@@ -86,10 +86,10 @@ function getOneBook(req, res){
   
 
   function add(request, response)  {
-    console.log(request.body);
+    // console.log(request.body);
     let SQL = `
       INSERT INTO books (author, title, isbn, image_url, description, bookshelf)
-      VALUES ($1, $2, $3, $4, $5, $6)`;
+      VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
   
     let VALUES = [
       request.body.author,
@@ -101,7 +101,11 @@ function getOneBook(req, res){
     ];
     client.query(SQL, VALUES)
       .then(results => {
-        response.status(200).redirect('/');
+          console.log('printing results')
+          console.log(results.rows)
+          let id = results.rows[0].id;
+
+        response.status(200).redirect(`/books/${id}`);
       })
       .catch( error => {
         console.error(error.message);
@@ -123,7 +127,7 @@ function getOneBook(req, res){
   });
     // 404 Handler
     app.use('*', (request, response) => {
-        console.log(request);
+        // console.log(request);
         response.status(404).send(`Can't Find ${request.pathname}`);
       });
 

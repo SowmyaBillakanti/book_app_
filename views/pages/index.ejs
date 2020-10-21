@@ -2,29 +2,13 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="public/styles/base.css">
+    <link rel="stylesheet" href="styles/base.css">
     <title> Hello World </title>
 </head>
-
 <body>
-    <h1>
-        Search for Books
-    </h1>
-    <form action="/searches" method="post">
-
-        <fieldset>
-            <input type="text" name="search" placeholder="search..." required>
-        </fieldset>
-        <fieldset>
-            <input type="radio" name="searchby" value="title" required>Title
-        </fieldset>
-        <fieldset>
-            <input type="radio" name="searchby" value="author" required>Author
-        </fieldset>
-        <button type="submit">Search Books</button>
-
-
-    </form>
+    <header>
+        <%- include('../layout/header') %>
+    </header>
     <p> Number of Books in database: <%= books.length %></p>
 
     <ul>
