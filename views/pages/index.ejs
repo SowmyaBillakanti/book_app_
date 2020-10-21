@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel= "stylesheet" href = "public/styles/base.css" >
-        <title> Hello World </title>
-    </head>
-    <body>
-        <h1>
-            Search for Books
-        </h1>
-        <form action="/searches" method="post">
 
-            <fieldset>
-                <input type="text" name="search" placeholder="search..." required>
-            </fieldset>
-            <fieldset>
-                <input type="radio" name="searchby" value="title" required>Title
-            </fieldset>
-            <fieldset>
-                <input type="radio" name="searchby" value="author" required>Author
-            </fieldset>
-            <button type="submit">Search Books</button>
+<head>
+    <link rel="stylesheet" href="public/styles/base.css">
+    <title> Hello World </title>
+</head>
+
+<body>
+    <h1>
+        Search for Books
+    </h1>
+    <form action="/searches" method="post">
+
+        <fieldset>
+            <input type="text" name="search" placeholder="search..." required>
+        </fieldset>
+        <fieldset>
+            <input type="radio" name="searchby" value="title" required>Title
+        </fieldset>
+        <fieldset>
+            <input type="radio" name="searchby" value="author" required>Author
+        </fieldset>
+        <button type="submit">Search Books</button>
 
 
-        </form>
-        <p>  Number of Books in database: <%= books.length %></p>
+    </form>
+    <p> Number of Books in database: <%= books.length %></p>
 
-        <ul>
-            <% books.forEach(book => { %>
-                <li id="row">
-                    <img height="270px" width="200px" src="<%=book.image_url %>" alt="">
-                    <h3> <%= book.title %> </h3>
-                    <p> <%= book.author %> </p>
-                    <p id="desc"> <%= book.description %> </p>
-                    <p> <%= book.amount %> </p>
-                </li>
+    <ul>
+        <% books.forEach(book => { %>
+            <%- include('books/detail.ejs', {book: book}); %>
+            <a href="/books/<%= book.id %>">Details</a>
+        <% }); %>
+    </ul>
 
-            <% }); %>
-        </ul>
-        
-    </body>
+</body>
+
 </html>

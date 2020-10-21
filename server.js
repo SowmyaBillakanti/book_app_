@@ -13,7 +13,7 @@ app.use(express.static('./public'));
 app.set('view engine', 'ejs');
 app.get('/', getBooks);
 app.get('/books/:id', getOneBook);
-app.post('/add', add);
+app.post('/books', add);
 app.post('/searches', createSearch);
 
 // app.get('/', (req , res) => {
@@ -70,32 +70,34 @@ function getBooks(req, res) {
     })
     .catch(err => console.error(err));
 }
+
 function getOneBook(req, res){
     let SQL = 'SELECT * FROM books WHERE id=$1';
-    let values = [req.params.book_id];
+    let values = [req.params.id];
+    console.log(req.params.id);
   
     return client.query(SQL, values)
       .then(result => {
-        res.render('pages/show', { books: result.rows[0] })
+          console.log(result.rows[0]);
+        res.render('pages/books/show', { book: result.rows[0] })
       })
       .catch(err => console.error(err));
   };
   
 
   function add(request, response)  {
-    console.log('You are here');
+    console.log(request.body);
     let SQL = `
-      INSERT INTO books (authors, title, isbn, image_url, description, bookshelf, amount)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+      INSERT INTO books (author, title, isbn, image_url, description, bookshelf)
+      VALUES ($1, $2, $3, $4, $5, $6)`;
   
     let VALUES = [
-      request.body.authors,
+      request.body.author,
       request.body.title,
       request.body.isbn,
       request.body.image_url,
       request.body.description,
       request.body.bookshelf,
-      request.body.amount
     ];
     client.query(SQL, VALUES)
       .then(results => {
