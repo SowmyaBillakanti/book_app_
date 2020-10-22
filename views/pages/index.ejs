@@ -15,9 +15,9 @@
 
     <ul>
         <% books.forEach(book => { %>
-            <%- include('books/detail.ejs', {book: book}); %>
-            <a href="/books/<%= book.id %>">Details</a>
-        <% }); %>
+            <%- include('books/detail.ejs', {book: book}) %>
+            <a href="/books/<%= book.id %>">View Details</a>
+        <% }) %>
     </ul>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </body>

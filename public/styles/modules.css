@@ -27,3 +27,7 @@ button{
     justify-content: center;
     font-size: 2vw;
 }
+
+.hideMe {
+    display: none;
+}

@@ -9,10 +9,13 @@
         </header>
         <ul>
             <%- include("detail.ejs",{"book":book}) %>
+            <%- include("edit.ejs",{"book":book, formAction:'Update'}) %>
         </ul> 
         
         <footer>
             <a href="/">Go back home</a>
+            
         </footer>
+        <script src = "/js/app.js"></script>
     </body>
 </html>
