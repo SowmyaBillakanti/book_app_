@@ -15,7 +15,7 @@ app.get('/', getBooks);
 app.get('/books/:id', getOneBook);
 app.post('/books', add);
 app.post('/searches', createSearch);
-
+app.put('/update/:book_id', updateBook);
 // app.get('/', (req , res) => {
 //     res.render('pages/index');
 // });
@@ -113,8 +113,31 @@ function getOneBook(req, res){
   };
   
 
+  function show(){
+    $( "showform" ).load( "/form" );
+    }
 
+function updateDetail(request, response){
+  let SQL = `
+  UPDATE books SET (author=$1, title=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6 WHERE id=$7)`;
 
+let VALUES = [
+  request.body.author,
+  request.body.title,
+  request.body.isbn,
+  request.body.image_url,
+  request.body.description,
+  request.body.bookshelf,
+  request.params.book_id
+];
+client.query(SQL, values)
+.then(response.redirect(`/books/${request.params.book_id}`))
+.catch(err => console.error(err));
+}
+function showForm(event,response){
+ document.getElementById('.changeDetail').show();
+    
+  };
 
 
 

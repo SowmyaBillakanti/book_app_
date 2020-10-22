@@ -3,6 +3,8 @@
 
 <head>
     <title> Books! </title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="styles/base.css">
 </head>
 
@@ -35,11 +37,13 @@
                 <input type="hidden" name="image_url" value="<%= book.image %>" />
                 <input type="hidden" name="description" value="<%= book.description %>" />
                 <input type="hidden" name="bookshelf" value="<%= book.bookshelf %>" />
-                <button type="submit">Add Book</button>
+                <button class = 'updateBook'type="submit">Add Book</button>
         </form>
         <% }) %>
         </section>
     </main>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </body>
+<script src = "server.js"></script>
 
 </html>
