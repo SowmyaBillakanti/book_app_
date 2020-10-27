@@ -18,6 +18,7 @@ app.get('/books/:id', getOneBook);
 app.post('/books', add);
 app.post('/searches', createSearch);
 app.put('/books/:id', updateBook);
+app.delete('/books/:id/delete', deleteBookDetails);
 
 function updateBook(request, response){
   let SQL = `UPDATE books SET author=$1, title=$2, isbn=$3, image_url=$4, description=$5, bookshelf=$6 WHERE id=$7;`;
@@ -37,6 +38,18 @@ function updateBook(request, response){
     .then(response.redirect(`/books/${request.params.id}`))
     
     .catch(err => console.error(err));
+}
+
+function deleteBookDetails(req, res) {
+
+  console.log('DELETE BUTTON PUSHED');
+
+  let SQL = 'DELETE FROM books WHERE id=$1;';
+  let values = [req.params.id];
+
+  client.query(SQL, values)
+      .then(res.redirect(`/`))
+      .catch(err => handleError(err));
 }
 
 
